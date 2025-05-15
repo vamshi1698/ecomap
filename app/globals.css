@@ -25,3 +25,7 @@ body::before {
   filter: blur(6px);
   z-index: -1;
 }
+
+*{
+  scroll-behavior: smooth;
+}

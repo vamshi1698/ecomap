@@ -2,9 +2,11 @@
 import { Search } from 'lucide-react'
 import Streets from './components/streets'
 import { redirect } from 'next/navigation';
+import LoginButton from './components/LoginButton';
+import ScrollFadePop from './components/ScrollFadePop';
 
 export default async function Home(){
-    const res =await fetch("http://localhost:3000/api/streets",{
+    const res =await fetch(`${process.env.NEXTAUTH_URL}/api/streets`,{
       cache:"no-store",
     }
   )
@@ -15,10 +17,10 @@ export default async function Home(){
       redirect(`/tree/${street}`)
     }
     const streets = await res.json()
-    console.log("Look at me",streets)    
     return(
     <main className='p-4 '>
-      <form  action={handleSubmit} className="flex mb-4 pr-10 p-4 text-[#E0F2F1] placeholder:[#80CBC4] rounded-2xl bg-[#122222] focus-within:border-[#103538]">
+      <ScrollFadePop >            
+      <form  action={handleSubmit} className="flex mb-4 pr-10 p-4 text-[#E0F2F1] placeholder:[#80CBC4] rounded-2xl bg-[#122222] focus-within:border-2 focus-within:border-[#103538]">
       <input
           type="text"
           className="w-full  outline-none"
@@ -28,10 +30,12 @@ export default async function Home(){
         />
         <Search className="hover:text-green-500" color="grey"/>
       </form>
+      </ScrollFadePop >            
 
       <div className="streets-list">
         <Streets streets={streets} />
       </div>
+      <LoginButton />
     </main>
     )
 }

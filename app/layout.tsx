@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from './components/Navbar.js'
 import FooterPage from './components/Footer.js'
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -26,8 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-      <link rel="icon" href="/tree.png" />
-        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet" />
+      <link rel="favicon" href="/tree.png" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

@@ -8,7 +8,7 @@ export async function POST(){
         return Response.json(users)
     }catch(err){
         return new Response(JSON.stringify({
-            error:"Failed to fetch users",
+            error:err.message,
             status :500
         }))
     }

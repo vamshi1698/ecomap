@@ -1,14 +1,7 @@
-export default function userPage(){
-    return(
-        <div>
-            Page is under construction
+export default async function profilePage() {
+    return (
+        <div className="h-[100dvh]">
+            f
         </div>
     )
-}
-
-export async function generateMetadata({params}) {
-    return{
-        title:"Profile page",
-        description: "This is a profile page"
-    }
 }

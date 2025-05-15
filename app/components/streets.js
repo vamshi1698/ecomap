@@ -1,12 +1,15 @@
+import Image  from "next/image"
 import Link from "next/link"
+import AnimatedCard from "./AnimatedCard"
 export default async function Streets({streets}){
     return(
         <ul className="sm:p-3 grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2 rounded-2xl">
             {
               streets && streets.map((street)=>(
+                <AnimatedCard key={street._id}>
                 <div key={street._id} className="street border-[#1E2E2E] text-[#E0F2F1] border-1 hover:scale-[1.02] transition-all bg-[#122222] gap-5 flex flex-col sm:rounded-xl sm:p-5 p-1 rounded-md mb-5">
-                  <div className="img w-full overflow-hidden">
-                    <img src={street.street_img} alt="Street Image" className="w-full md:rounded-2xl rounded-sm aspect-video object-cover" />
+                  <div className="img w-[100%] h-[400px] relative overflow-hidden">
+                    <Image src={street.street_img} alt="Street Image" fill className="w-full md:rounded-2xl rounded-sm aspect-video object-cover" />
                   </div>
                   <div className="location_name">
                     <span className="text-[#80CBC4] p-1 mr-2">Location Name :</span><span>{street.location_name}</span>
@@ -18,7 +21,8 @@ export default async function Streets({streets}){
                     <span className="text-[#80CBC4] p-1 mr-2">Address :</span><span>{street.address}</span>
                   </div>
                   <Link href={`/tree/${street.location_id}`} className="bg-[#00E676] hover:bg-[#1DE9B6] text-[#000] text-center p-1 rounded-2xl">View more</Link>
-                </div>  
+                </div> 
+                </AnimatedCard> 
               ))
             }
         </ul>
