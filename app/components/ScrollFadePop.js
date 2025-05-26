@@ -1,4 +1,3 @@
-// @/app/components/ScrollFadePop.js
 "use client";
 
 import { motion } from "framer-motion";

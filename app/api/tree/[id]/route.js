@@ -1,36 +1,62 @@
-import clientPromise from '../../../lib/mongo'
+import clientPromise from '../../../lib/mongo';
+import { ObjectId } from 'mongodb';
 
-export async function GET( req,{ params }) {
-  const { id } =await params;
-  if (!id) {
-    return new Response(
-      JSON.stringify({ error: 'ID parameter is missing' }),
-      {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' },
-      }
-    );
-  }
+export async function GET(req, { params }) {
+  const { id } = params;
   try {
     const client = await clientPromise;
-    const db = client.db("eco-map");
-    const streets = await db.collection("trees").find({ location_id: id }).toArray();
+    const db = client.db('eco-map');
 
-    return new Response(JSON.stringify(streets), {
-      status: 200,
-      headers: { "Content-Type": "application/json" }
-    });
+    const trees = await db.collection('trees').find({ location_id: id }).toArray();
+
+    return new Response(JSON.stringify(trees), { status: 200 });
   } catch (err) {
-    return new Response(
-      JSON.stringify({
-        error: err.message,
-        status: 500
-      }),
-      {
-        headers: {
-          "Content-Type": "application/json"
-        }
-      }
+    return new Response(JSON.stringify({ error: err.message }), { status: 500 });
+  }
+}
+
+export async function PUT(req, { params }) {
+  const { id } = params;
+  try {
+    const body = await req.json();
+    const client = await clientPromise;
+    const db = client.db('eco-map');
+
+    const result = await db.collection('trees').findOneAndUpdate(
+      { _id: new ObjectId(id) },
+      { $set: body },
+      { returnDocument: 'after' }
     );
+
+    if (!result.value) {
+      return new Response(JSON.stringify({ error: 'Tree not found' }), { status: 404 });
+    }
+
+    return new Response(JSON.stringify(result.value), { status: 200 });
+  } catch (err) {
+    return new Response(JSON.stringify({ error: err.message }), { status: 500 });
+  }
+}
+
+export async function DELETE(req, { params }) {
+  const { id } = params;
+  try {
+    const client = await clientPromise;
+    const db = client.db('eco-map');
+
+    const deleted = await db.collection('trees').findOneAndDelete({ _id: new ObjectId(id) });
+
+    if (!deleted.value) {
+      return new Response(JSON.stringify({ error: 'Tree not found' }), { status: 404 });
+    }
+
+    await db.collection('tree_locations').updateOne(
+      { location_id: deleted.value.location_id },
+      { $inc: { no_of_trees: -1 } }
+    );
+
+    return new Response(JSON.stringify({ message: 'Tree deleted' }), { status: 200 });
+  } catch (err) {
+    return new Response(JSON.stringify({ error: err.message }), { status: 500 });
   }
 }

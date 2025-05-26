@@ -12,7 +12,7 @@ export default async function ReportPage({params,searchParams}) {
             description :formData.get('description'),
             reported_at : new Date().toLocaleString()
         }
-        const res =await fetch(`http://localhost:3000/api/tree/${id}/${report}`,{
+        const res =await fetch(`${NEXTAUTH_URL}/api/tree/${id}/${report}`,{
             method:"POST",
             headers:{
                 'Content-Type':'application/json'

@@ -5,10 +5,10 @@ import Image  from "next/image"
 import Link from "next/link";
 export default async function TreePage({ params}) {
   const { id } = await params;
-  const res = await fetch(`http://localhost:3000/api/tree/${id}`, {
+  const res = await fetch(`/api/tree/${id}`, {
     cache: 'no-store'
   });
-  const streetRes = await fetch(`http://localhost:3000/api/street/${id}`, {
+  const streetRes = await fetch(`/api/street/${id}`, {
     cache: 'no-store'
   });
   const street = await streetRes.json()

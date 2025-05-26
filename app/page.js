@@ -2,11 +2,10 @@
 import { Search } from 'lucide-react'
 import Streets from './components/streets'
 import { redirect } from 'next/navigation';
-import LoginButton from './components/LoginButton';
 import ScrollFadePop from './components/ScrollFadePop';
 
 export default async function Home(){
-    const res =await fetch(`${process.env.NEXTAUTH_URL}/api/streets`,{
+    const res =await fetch(`/api/streets`,{
       cache:"no-store",
     }
   )
@@ -35,7 +34,6 @@ export default async function Home(){
       <div className="streets-list">
         <Streets streets={streets} />
       </div>
-      <LoginButton />
     </main>
     )
 }
