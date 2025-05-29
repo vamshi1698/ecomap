@@ -1,12 +1,12 @@
 "use client";
 import { useSession } from "next-auth/react";
 import LogoutButton from './Logout';
-import { CircleUserRound, LayoutDashboard, Trees } from 'lucide-react';
+import { LayoutDashboard, Trees } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 export default function NavBar() {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const pathname = usePathname();
 
   if (pathname === '/login' || pathname === '/signup') {

@@ -69,6 +69,7 @@ export const authOptions = {
             token.name = decoded.name ?? token.name;
             token.email = decoded.email ?? token.email;
           } catch (e) {
+            console.log(e)
           }
         }
       }

@@ -9,10 +9,9 @@ export default function AdminPageWrapper() {
   const [loadingUsers, setLoadingUsers] = useState(true);
   const [selectedRoles, setSelectedRoles] = useState({});
   const [reports, setReports] = useState([]);
-
   const [showCreateTreeForm, setShowCreateTreeForm] = useState(false);
   const [showDeleteTreeForm, setShowDeleteTreeForm] = useState(false);
-
+  const [locations,setLocations] = useState([])
   const [treeData, setTreeData] = useState({
     tree_name: "",
     tree_id: "",
@@ -20,11 +19,18 @@ export default function AdminPageWrapper() {
     tree_status: "",
     tree_age_years: "",
     tree_height_meters: "",
-    tree_address: "",
     location_id: "",
   });
 
   const [deleteTreeId, setDeleteTreeId] = useState("");
+
+  useEffect(()=>{
+    fetch('/api/streets')
+    .then((res)=> res.json())
+    .then((data)=>{
+      setLocations(data)
+    })
+  },[])
 
   useEffect(() => {
     fetch("/api/users")
@@ -164,7 +170,7 @@ export default function AdminPageWrapper() {
           <tbody>
   {users
     .filter((user) => user.email !== session.user.email)
-    .map((user, index) => (
+    .map((user, _) => (
       <tr
         key={user.email}
         className="text-center text-black odd:bg-gray-100 even:bg-white"
@@ -221,10 +227,25 @@ export default function AdminPageWrapper() {
             >
               &times;
             </button>
-            <h2 className="text-xl font-bold mb-4 text-center">Create Tree</h2>
+            <h2 className="text-xl font-bold mb-4 text-center">Add a Tree</h2>
             <form onSubmit={handleCreateTree} className="flex flex-col gap-3">
-              <input
-                type="text"
+              <select
+                name="location_id"
+                value={treeData.location_id}
+                onChange={handleTreeChange}
+                className="px-3 py-2 rounded text-black"
+                required
+              >
+              <option value="" disabled>
+                Select Location
+              </option>
+            {locations.map((loc) => (
+              <option key={loc._id} value={loc.location_name}>
+                  {loc.location_name}
+                </option>
+              ))}
+              </select>
+              <input type="text"
                 name="tree_name"
                 placeholder="Tree Name"
                 value={treeData.tree_name}
@@ -273,23 +294,15 @@ export default function AdminPageWrapper() {
                 onChange={handleTreeChange}
                 className="px-3 py-2 rounded text-black"
               />
-              <input
-                type="text"
-                name="location_id"
-                placeholder="Location ID"
-                value={treeData.location_id}
-                onChange={handleTreeChange}
-                className="px-3 py-2 rounded text-black"
-                required
-              />
-              <button
-                type="submit"
-                className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-white"
-              >
-                Create Tree
-              </button>
-            </form>
-          </div>
+              
+          <button
+            type="submit"
+            className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-white"
+          >
+          Add a Tree
+        </button>
+        </form>
+        </div>
         </div>
       )}
 
@@ -303,7 +316,7 @@ export default function AdminPageWrapper() {
             >
               &times;
             </button>
-            <h2 className="text-xl font-bold mb-4 text-center">Delete Tree</h2>
+            <h2 className="text-xl font-bold mb-4 text-center">Remove Tree</h2>
             <form onSubmit={handleDeleteTree} className="flex flex-col gap-3">
               <input
                 type="text"
@@ -317,7 +330,7 @@ export default function AdminPageWrapper() {
                 type="submit"
                 className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded text-white"
               >
-                Delete Tree
+                Remove Tree
               </button>
             </form>
           </div>

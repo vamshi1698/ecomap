@@ -21,7 +21,7 @@ export default function SignupPageClient() {
     });
 
     if (res.ok) {
-      router.push("/dashboard");
+      router.push("/");
     } else {
       const { error } = await res.json();
       setError(error || "Signup failed");
