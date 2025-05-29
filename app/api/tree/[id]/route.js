@@ -39,19 +39,20 @@ export async function PUT(req, { params }) {
 }
 
 export async function DELETE(req, { params }) {
-  const { id } = params;
+  const { id } = await params;
   try {
     const client = await clientPromise;
     const db = client.db('eco-map');
 
-    const deleted = await db.collection('trees').findOneAndDelete({ _id: new ObjectId(id) });
-
-    if (!deleted.value) {
+    const tree = await db.collection('trees').findOne({ tree_id: id });
+    if (!tree) {
       return new Response(JSON.stringify({ error: 'Tree not found' }), { status: 404 });
     }
 
-    await db.collection('tree_locations').updateOne(
-      { location_id: deleted.value.location_id },
+    await db.collection('trees').deleteOne({ tree_id: id });
+
+    await db.collection('streets').updateOne(
+      { location_id: tree.location_id },
       { $inc: { no_of_trees: -1 } }
     );
 

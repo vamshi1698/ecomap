@@ -32,7 +32,6 @@ export default async function ReportPage({params,searchParams}) {
                 <select name="issue-type" className="focus:outline-0 w-full bg-[#122222] text-[#E0F2F1] p-2 rounded mb-4 outline-none border border-[#1A2E2E]" id="issue-type" required>
                     <option value="Damage">Damage</option>
                     <option value="Disease">Disease</option>
-                    <option value="Safety Hazard">Safety Hazard</option>
                     <option value="Other">Other</option>
                 </select>
                 <label htmlFor="description" className="mt-4 block mb-2 text-[#B2DFDB] ">Description</label>

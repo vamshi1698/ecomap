@@ -108,7 +108,6 @@ export default function AdminPageWrapper() {
         tree_status: "",
         tree_age_years: "",
         tree_height_meters: "",
-        tree_address: "",
         location_id: "",
       });
       setShowCreateTreeForm(false);
@@ -123,29 +122,28 @@ export default function AdminPageWrapper() {
       alert("Please enter Tree ID to delete");
       return;
     }
-    const res = await fetch(`/api/tree/${encodeURIComponent(deleteTreeId)}`, {
+    const res = await fetch(`/api/tree/${deleteTreeId}`, {
       method: "DELETE",
     });
     const result = await res.json();
     if (res.ok) {
-      alert(`Tree deleted successfully`);
       setDeleteTreeId("");
       setShowDeleteTreeForm(false);
     } else {
-      alert(`Error: ${result.error}`);
+      setShowDeleteTreeForm(false);
     }
   };
 
   if (status === "loading")
-    return <div className="p-4">Loading session...</div>;
+    return <div className="p-4 min-h-[calc(100dvh-5rem)]">Loading session...</div>;
 
   if (!session || session.user.role !== "admin")
     return (
-      <div className="p-6 text-center text-red-500">Access Denied</div>
+      <div className="p-6 text-center text-red-500 min-h-[calc(100dvh-5rem)]">Access Denied</div>
     );
 
   return (
-    <div className="mx-auto p-6 min-h-[calc(100dvh-10rem)] backdrop-blur-md bg-white/10 border border-blue-100/20 rounded-2xl shadow-lg text-white">
+    <div className="mx-auto p-6 min-h-[calc(100dvh-10rem)] backdrop-blur-md bg-white/10 border border-blue-100/20 shadow-lg text-white">
 
       <h1 className="text-2xl font-bold mb-4 text-center">
         Admin Panel - Manage Roles
@@ -214,7 +212,7 @@ export default function AdminPageWrapper() {
       </div>
 
       {showCreateTreeForm && (
-        <div className="fixed inset-0  bg-opacity-60 flex items-center justify-center z-50">
+        <div className="fixed inset-0  bg-opacity-60 flex backdrop-blur-2xl backdrop-opacity-5 items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 max-w-lg w-full text-black relative">
             <button
               className="absolute top-2 right-2 text-gray-700 hover:text-gray-900 text-xl font-bold"
@@ -272,14 +270,6 @@ export default function AdminPageWrapper() {
                 name="tree_height_meters"
                 placeholder="Tree Height (meters)"
                 value={treeData.tree_height_meters}
-                onChange={handleTreeChange}
-                className="px-3 py-2 rounded text-black"
-              />
-              <input
-                type="text"
-                name="tree_address"
-                placeholder="Tree Address"
-                value={treeData.tree_address}
                 onChange={handleTreeChange}
                 className="px-3 py-2 rounded text-black"
               />

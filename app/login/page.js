@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import LoginButton from "../components/LoginButton";
-
+import { getToken } from "next-auth/jwt";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
