@@ -2,7 +2,7 @@ import clientPromise from '../../../lib/mongo';
 import { ObjectId } from 'mongodb';
 
 export async function GET(req, { params }) {
-  const { id } = params;
+  const { id } =await params;
   try {
     const client = await clientPromise;
     const db = client.db('eco-map');
@@ -18,10 +18,10 @@ export async function GET(req, { params }) {
 export async function PUT(req, { params }) {
   const { id } = params;
   try {
-    const body = await req.json();
+    var body = await req.json();
     const client = await clientPromise;
     const db = client.db('eco-map');
-
+    body = [...body,status="pending"]
     const result = await db.collection('trees').findOneAndUpdate(
       { _id: new ObjectId(id) },
       { $set: body },

@@ -9,7 +9,7 @@ export default async function Streets({streets}){
                 <AnimatedCard key={street._id}>
                 <div key={street._id} className="street border-[#1E2E2E] text-[#E0F2F1] border-1 hover:scale-[1.02] transition-all bg-[#122222] gap-5 flex flex-col sm:rounded-xl sm:p-5 p-1 rounded-md mb-5">
                   <div className="img w-[100%] h-[400px] relative overflow-hidden">
-                    <Image src={street.street_img} alt="Street Image" fill className="w-full md:rounded-2xl rounded-sm aspect-video object-cover" />
+                    <Image src={street.street_img} alt="Street Image" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" priority fill className="w-full md:rounded-2xl rounded-sm aspect-video object-cover" />
                   </div>
                   <div className="location_name">
                     <span className="text-[#80CBC4] p-1 mr-2">Location Name :</span><span>{street.location_name}</span>

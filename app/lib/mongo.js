@@ -1,9 +1,8 @@
 import { MongoClient } from "mongodb";
-const uri = "mongodb://localhost:27017";
 let client;
 let clientPromise;
 
-client = new MongoClient(uri);
+client = new MongoClient(process.env.MONGO_URI);
 clientPromise = client.connect()
 
 export default clientPromise;

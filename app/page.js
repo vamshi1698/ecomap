@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation';
 import ScrollFadePop from './components/ScrollFadePop';
 
 export default async function Home(){
-    const res =await fetch(`/api/streets`,{
+    const res =await fetch(`http://127.0.0.1:3000/api/streets`,{
       cache:"no-store",
     }
   )
@@ -13,9 +13,10 @@ export default async function Home(){
     async function handleSubmit(formData) {
       "use server";
       const street = formData.get("street")
-      redirect(`/tree/${street}`)
+      redirect(`http:/localhost:3000/tree/${street}`)
     }
     const streets = await res.json()
+    
     return(
     <main className='p-4 '>
       <ScrollFadePop >            

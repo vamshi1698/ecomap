@@ -3,6 +3,7 @@
     "target": "ES2017",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
+    "checkJs": false,
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
@@ -22,6 +23,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/page.jss", "app/components/streets.js", "app/tree/[id]/page.js", "app/components/AnimatedCard.tsx", "middleware.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/page.jss", "app/components/streets.js", "app/tree/[id]/page.js", "app/components/AnimatedCard.tsx", "middleware.ts", "app/components/SignupPageClient.js"],
   "exclude": ["node_modules"]
 }

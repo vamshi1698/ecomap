@@ -8,7 +8,7 @@ export async function POST(req) {
 
     const result = await db.collection('trees').insertOne(body);
 
-    await db.collection('tree_locations').updateOne(
+    await db.collection('streets').updateOne(
       { location_id: body.location_id },
       { $inc: { no_of_trees: 1 } }
     );

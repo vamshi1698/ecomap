@@ -1,19 +1,7 @@
-import clientPromise from "../../lib/mongo";
+import { NextResponse } from "next/server";
+import { getAllUsers } from "./../../lib/user";
 
-export async function POST(){
-    try{
-        const client = await clientPromise
-        const db = client.db("eco-map")
-        const users = await db.collection('users').find({}).toArray()
-        return Response.json(users)
-    }catch(err){
-        return new Response(JSON.stringify({
-            error:err.message,
-            status :500
-        }))
-    }
-}
-
-export async function GET(){
-    return new Response("This is a GET request")
+export async function GET() {
+  const users = await getAllUsers();
+  return NextResponse.json(users);
 }
