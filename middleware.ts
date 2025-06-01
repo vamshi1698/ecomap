@@ -27,9 +27,8 @@ export async function middleware(req: NextRequest) {
     }
   }
 
-  console.log("[Middleware] Token:", token);
 
-  const publicPaths = ["/login", "/signup", "/favicon.ico", "/api/auth"];
+  const publicPaths = ["/login", "/signup", "/favicon.ico", "/api/auth",'/api'];
   if (publicPaths.some(path => pathname.startsWith(path))) return NextResponse.next();
   if (pathname.startsWith("/_next") || pathname.startsWith("/api")) return NextResponse.next();
 

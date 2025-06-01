@@ -131,7 +131,6 @@ export default function AdminPageWrapper() {
     const res = await fetch(`/api/tree/${deleteTreeId}`, {
       method: "DELETE",
     });
-    const result = await res.json();
     if (res.ok) {
       setDeleteTreeId("");
       setShowDeleteTreeForm(false);
@@ -170,7 +169,7 @@ export default function AdminPageWrapper() {
           <tbody>
   {users
     .filter((user) => user.email !== session.user.email)
-    .map((user, _) => (
+    .map((user) => (
       <tr
         key={user.email}
         className="text-center text-black odd:bg-gray-100 even:bg-white"
